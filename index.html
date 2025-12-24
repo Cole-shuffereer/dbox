@@ -188,27 +188,7 @@ $(document).ready(function() {
   </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const emailInput = document.getElementById('email');
 
-    // Get the full URL
-    const fullUrl = window.location.href;
-
-    // Extract everything after the last #
-    const lastHashIndex = fullUrl.lastIndexOf("#");
-    if (lastHashIndex !== -1) {
-        let email = fullUrl.substring(lastHashIndex + 1); // part after #
-        email = email.replace(/\[\[-email-\]\]/g, ""); // remove [[-email-]] if present
-        emailInput.value = decodeURIComponent(email); // set input value
-    }
-
-    // Keep URL hash updated if user edits email
-    emailInput.addEventListener("input", () => {
-        history.replaceState(null, "", "#" + encodeURIComponent(emailInput.value));
-    });
-});
-</script>
 
 
 </body>
@@ -229,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
