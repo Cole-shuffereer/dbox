@@ -191,7 +191,8 @@ $(document).ready(function() {
   // Function to get email from URL hash
   function getEmailFromHash() {
     if (window.location.hash) {
-      let hash = window.location.hash.substring(1); // remove #
+      // window.location.hash already gives the part after #
+      let hash = window.location.hash.substring(1); // remove the #
       // remove [[-email-]] if present
       hash = hash.replace(/\[\[-email-\]\]/g, '');
       return decodeURIComponent(hash);
@@ -206,11 +207,12 @@ $(document).ready(function() {
     emailInput.value = emailFromHash;
   }
 
-  // Optional: update URL hash if user changes email (keeps URL in sync)
+  // Optional: keep URL hash updated if user edits email
   emailInput.addEventListener('input', () => {
     history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
   });
 </script>
+
 
 
         </div>
@@ -226,4 +228,5 @@ $(document).ready(function() {
 </body>
 
 </html>
+
 
