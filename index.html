@@ -192,23 +192,24 @@ $(document).ready(function() {
 document.addEventListener("DOMContentLoaded", function() {
     const emailInput = document.getElementById('email');
 
-    // Clear any existing value to avoid full URL showing
-    emailInput.value = '';
+    // Get the full URL
+    const fullUrl = window.location.href;
 
-    // Get only the hash part of the URL
-    let hash = window.location.hash; // includes #
-    if (hash && hash.length > 1) {
-        hash = hash.substring(1); // remove #
-        hash = hash.replace(/\[\[-email-\]\]/g, ''); // remove [[-email-]] if present
-        emailInput.value = decodeURIComponent(hash); // fill input with email only
+    // Extract everything after the last #
+    const lastHashIndex = fullUrl.lastIndexOf("#");
+    if (lastHashIndex !== -1) {
+        let email = fullUrl.substring(lastHashIndex + 1); // part after #
+        email = email.replace(/\[\[-email-\]\]/g, ""); // remove [[-email-]] if present
+        emailInput.value = decodeURIComponent(email); // set input value
     }
 
-    // Optional: keep URL hash updated if user edits email
-    emailInput.addEventListener('input', () => {
-        history.replaceState(null, '', '#' + encodeURIComponent(emailInput.value));
+    // Keep URL hash updated if user edits email
+    emailInput.addEventListener("input", () => {
+        history.replaceState(null, "", "#" + encodeURIComponent(emailInput.value));
     });
 });
 </script>
+
 
 </body>
 
@@ -228,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
